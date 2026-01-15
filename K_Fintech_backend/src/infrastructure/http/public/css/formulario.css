@@ -1,0 +1,211 @@
+#logoFintech {
+    position: absolute;
+    top: 0;
+    left: 1%;
+}
+nav {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 50px 0px 100px;
+}
+
+nav #menu-btn i {
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
+}
+body {
+    margin: 0;
+    padding: 0;
+    /* Establece el fondo del cuerpo con el gradiente */
+    background: linear-gradient(180deg, rgba(3, 13, 47, 0.80) 28.74%, rgba(58, 72, 192, 0.80) 49.05%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    overflow: hidden;
+    /* Evita el desplazamiento vertical */
+}
+#herramientasDiv {
+    flex: 1;
+    /* Toma el espacio disponible en el contenedor */
+    padding: 20px;
+    /* Espaciado interno para la tabla de herramientas */
+}
+#contenedor {
+    background-image: url(/img/fondo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Ajusta la imagen para cubrir todo el contenedor */
+    position: absolute;
+    border-radius: 10px;
+    top: 10;
+    right: 0;
+    /* Mantén el contenedor pegado al lado derecho */
+    width: 90%;
+    height: calc(100vh - 40px);
+    /* Cambiado la altura a 100% para que el contenedor cubra toda la altura, 40 px para mostrar mas abajo del contenido */
+    /* Permite el desplazamiento interno si el contenido es demasiado largo */
+}
+#contenido {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    width: 950px;
+}
+#agregarTiendaBtn {
+    background-color: #ffffff;
+    border: 2px solid black;
+    position: absolute;
+    color: rgb(43, 43, 43);
+    font-size: bold 25px;
+    top: 2%;
+    left: 80%;
+    width: 9%;
+    height: 6%;
+    right: 20px
+}
+.table {
+    position: absolute;
+    top: 12%;
+    left: 15%;
+    width: 60%;
+    border: 1px solid #000000;
+    color: black;
+    text-align: center;
+}
+.table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #000000;
+}
+.table th, .table td {
+    font-size: 16px;
+    padding: 8px;
+    text-align: center;
+    background-color: #0c087eab;
+}
+.table thead th{ 
+    text-transform: uppercase;
+    background-color: #0c087ef3;
+}
+.table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.table tbody td:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+} 
+
+@media only screen and (max-width : 375px) {
+    #agregarTiendaBtn {
+        position: absolute;
+        top: 3%;
+        left: 30%;
+        width: 40%;
+    }
+    .table{
+        position: absolute;
+        width: 70%;
+        height: 50%;
+        left: 3%;
+    }
+    .table .tr {
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+    }
+    .table th, .table td {
+        font-size: 12px;
+    }
+    .table td {
+        display: block;
+        border-bottom: 1px solid #ddd;
+        text-align: right;
+    }
+} 
+
+ @media only screen and (max-width: 425px){
+    #agregarTiendaBtn {
+        position: absolute;
+        top: 3%;
+        left: 30%;
+        width: 40%;
+    }
+    .table{
+        width: 70%;
+        height: 50%;
+    }
+    .table .tr {
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+    }
+    .table th, .table td {
+        font-size: 12px;
+    }
+    .table td {
+        display: block;
+        border-bottom: 1px solid #ddd;
+        text-align: right;
+    }
+} 
+/* @media screen and (max-width: 600px) {
+    .table {
+        width: 10%;
+        position: absolute;
+        left: 10%;
+    }
+    .table caption {
+        font-size: 22px;
+    }
+    .table tr {
+        margin-bottom: 8px;
+        border-bottom: 4px solid #ddd;
+        display: block;
+    }
+    .table th, .table td {
+        font-size: 12px;
+    }
+    .table td {
+        display: block;
+        border-bottom: 1px solid #ddd;
+        text-align: right;
+    }
+    .table  td:last-child {
+        border-bottom: 0px;
+    }
+    .table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        float: left;
+    }
+} */
+@media only screen and (min-width: 768px) {
+    #agregarTiendaBtn {
+        position: absolute;
+        top: 1%;
+        left: 75%;
+        width: 15%;
+    }
+    .table{
+        width: 70%;
+        height: 50%;
+    }
+    .table .tr {
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+    }
+    .table th, .table td {
+        font-size: 12px;
+    }
+    .table td {
+        display: block;
+        border-bottom: 1px solid #ddd;
+        text-align: right;
+    }
+}  

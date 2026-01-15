@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/css/agregar.css">
+<body>
+        <nav>
+            <div id=""><a href="/"><img src="/img/logo.png" alt="FINTECH" height="80px"></a></div>
+            {{!-- <input type="checkbox" id="click">
+            <label for="click" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <ul>
+                <li><a id="active" href="/agregar">Agregar Tienda</a></li>
+            </ul> --}}
+        </nav>
+        <form action="/tienda/agregar/{user.idDueños{}}" method="post" id="contenedor">
+            {{!-- <div id="imagenNegocio">
+                <p>Imagen del Negocio</p>
+                <input name="fotoTienda" type="file" src="/img/file.png" alt="Enviar" width="30%">
+            </div> --}}
+                {{!-- <input type="image" src="/img/file.png" id="imagen" > --}}
+                {{!-- <label for="" id="negocio">Nombre del Negocio</label><br> --}}
+                <input name="nombreTienda" type="text" id="negocio" placeholder="Nombre del Negocio">
+                <input name="RUCTienda" type="number" id="ruc" placeholder="No. de Ruc">
+                <input name="dueñoTienda" type="text"id="propietario" placeholder="Ingresa tu nombre completo">
+                <input name="dirección_matriz_tienda" type="text"id="matriz" placeholder="Ingresa la direccion Matriz">
+                <input name="direccion_sucursal_tienda" type="text"id="sucursal" placeholder="ingresa la direccion Sucural">
+                <input name="correo_electronico_tienda" type="text"id="email" placeholder="Ingresa el correo de la tienda">
+                <input name="telefono" type="number"id="telefono" placeholder="No. telefono">
+                <button id="btn" type="submit">Guardar</button>
+        </form>
+</body>

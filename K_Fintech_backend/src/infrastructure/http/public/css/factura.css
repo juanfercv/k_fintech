@@ -1,0 +1,173 @@
+#logoFintech {
+  position: absolute;
+  top: 0;
+  left: 1%;
+}
+nav {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 50px 0px 100px;
+}
+nav #menu-btn i {
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+}
+body {
+  margin: 0;
+  padding: 0;
+  /* Establece el fondo del cuerpo con el gradiente */
+  background: linear-gradient(180deg, rgba(3, 13, 47, 0.80) 28.74%, rgba(58, 72, 192, 0.80) 49.05%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow: hidden;
+  /* Evita el desplazamiento vertical */
+}
+#herramientasDiv {
+  flex: 1;
+  /* Toma el espacio disponible en el contenedor */
+  padding: 20px;
+  /* Espaciado interno para la tabla de herramientas */
+}
+#contenedor {
+  background-image: url(/img/fondo.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* Ajusta la imagen para cubrir todo el contenedor */
+  position: absolute;
+  border-radius: 10px;
+  top: 10;
+  right: 0;
+  /* Mantén el contenedor pegado al lado derecho */
+  width: 90%;
+  height: calc(100vh - 40px);
+  /* Cambiado la altura a 100% para que el contenedor cubra toda la altura, 40 px para mostrar mas abajo del contenido */
+  overflow: auto;
+  /* Permite el desplazamiento interno si el contenido es demasiado largo */
+}
+#formulario {
+  margin-top: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 950px;
+
+}
+#divConLinea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px dotted black;
+  padding-bottom: 10px;
+}
+#contenedor2 {
+  border-bottom: 2px solid black;
+}
+#divSeccion {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+#izquierda {
+  flex: 1;
+  text-align: left;
+}
+#derecha {
+  flex: 1;
+  text-align: right;
+}
+#derecha table {
+  width: 100%;
+}
+table {
+  border-collapse: collapse;
+  /* Para evitar espacios entre las celdas */
+}
+
+#formaPago {
+  border: 4px solid rgb(255, 255, 255);
+  border-radius: 20px;
+  background: #D9D9D9;
+}
+th {
+  border: 4px solid rgb(255, 255, 255);
+  border-radius: 20px;
+  background: #D9D9D9;
+
+}
+#tabla-contenedor {
+  width: 80%;
+  border: 2px solid rgb(0, 0, 0);
+  padding: 10px;
+  /* Espaciado interno del contenedor */
+  display: inline-block;
+  /* Para que el contenedor se ajuste al contenido */
+  max-width: 100%
+}
+#table-container {
+  max-width: 100%;
+  /* Asegura que la tabla se ajuste al ancho del contenedor */
+  margin: 0 auto;
+  /* Centra la tabla */
+}
+#imagen-adaptable {
+  max-width: 50%;
+  height: auto;
+  margin-right: 20px;
+}
+h1 {
+  color: #000;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+h3 {
+  font-size: 25px;
+}
+#numero {
+  width: 90%;
+}
+#numero th,
+.numero td {
+  padding: 20px;
+  border: 1px solid black;
+  /* Agrega bordes a las celdas */
+}
+#nFactura {
+  text-align: center;
+}
+/*Tabla de Herramientas*/
+#herramientas {
+  border-collapse: collapse;
+  border: solid #000;
+  text-align: right;
+}
+#borderless-table p,
+th,
+td {
+  text-align: left;
+}
+#herramientas th,
+td {
+  padding: 9px;
+  text-align: left;
+}
+#herramientas th {
+  border: solid #000;
+  background-color: #D9D9D9;
+}
+input{
+border-radius: 10px; /* Puedes ajustar este valor según tu preferencia */
+padding: 8px; /* Agrega algún espacio interno para mejorar la apariencia */
+border: 1px solid #ccc; 
+}

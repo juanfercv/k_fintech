@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="/css/vista.css">
+
+<body>
+    <div id="contenedor"></div>
+        <nav>
+            <div id=""><a href="/"><img id="logo" src="/img/logo.png" alt="FINTECH" ></a></div>
+            <input type="checkbox" id="click">
+            <label for="click" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <ul>
+                <li><a id="active" href="/">Cerrar Sesion</a></li>
+            </ul>
+        </nav>
+        {{#each lista}}
+            <img id="fdf" src="/img/tienda.jpeg" alt="Tu Tienda">
+            <a href="/tienda/editar/{{idTienda}}"><button id="btn">Editar</button></a>
+            <a href="/formulario"><button id="btn2">Formulario</button></a>
+        {{/each}} 
+</body>

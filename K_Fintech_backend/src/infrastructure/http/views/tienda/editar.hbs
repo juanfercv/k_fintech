@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="/css/agregar.css">
+<body>
+        <nav>
+            <div id=""><a href="/"><img src="/img/logo.png" alt="FINTECH" height="80px"></a></div>
+            <input type="checkbox" id="click">
+            <label for="click" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <ul>
+                <li><a id="active" href="/vista">Inicio</a></li>
+            </ul>
+        </nav>
+        {{#each lista}}
+        <form action="/tienda/editar/{{idTienda}}" method="post" id="contenedor">
+            {{!-- <div id="imagenNegocio">
+                <p>Imagen del Negocio</p>
+                <input name="fotoTienda" value ="{{fotoTienda}}" type="file" src="/img/file.png" alt="Enviar" width="30%">
+            </div> --}}
+                {{!-- <input type="image" src="/img/file.png" id="imagen" > --}}
+                {{!-- <label for="" id="negocio">Nombre del Negocio</label><br> --}}
+                <input name="nombreTienda"value="{{nombreTienda}}" type="text" id="negocio" placeholder="Nombre del Negocio">
+                <input name="RUCTienda"value="{{RUCTienda}}" type="number" id="ruc" placeholder="No. de Ruc">
+                <input name="dueñoTienda"value="{{dueñoTienda}}" type="text"id="propietario" placeholder="Nombre del propietario">
+                <input name="dirección_matriz_tienda"value="{{dirección_matriz_tienda}}" type="text"id="matriz" placeholder="Direccion Matriz">
+                <input name="direccion_sucursal_tienda"value="{{direccion_sucursal_tienda}}" type="text"id="sucursal" placeholder="Direccion Sucural">
+                <input name="correo_electronico_tienda"value="{{correo_electronico_tienda}}" type="text"id="email" placeholder="Correo Electronico">
+                <input name="telefono"value="{{telefono}}" type="number"id="telefono" placeholder="No. telefono">
+                <button id="btn" type="submit">Actualizar</button>
+        </form>
+        {{/each}}
+</body>
