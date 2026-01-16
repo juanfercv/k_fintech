@@ -17,7 +17,8 @@ const VerFactura: React.FC = () => {
             .catch(() => setLoading(false));
     }, [id]);
 
-    if (loading) return <p style={{ textAlign: 'center' }}>Cargando factura...</p>;
+    const centerText: React.CSSProperties = { textAlign: 'center' };
+    if (loading) return <p style={centerText}>Cargando factura...</p>;
     if (!factura) return <p>No se pudo cargar la factura</p>;
 
     return (
@@ -53,7 +54,7 @@ const VerFactura: React.FC = () => {
                     <p style={{ margin: '4px 0' }}>Tel: {factura.tienda?.telefono}</p>
                 </div>
 
-                <div style={{ textAlign: 'right' }}>
+                <div style={{ textAlign: ('right' as React.CSSProperties['textAlign']) }}>
                     <h2 style={{ margin: 0 }}>FACTURA</h2>
                     <p><b>N°:</b> {factura.idFactura}</p>
                     <p><b>Fecha:</b> {factura.fecha_emision}</p>
@@ -112,7 +113,7 @@ const VerFactura: React.FC = () => {
                     <p style={totalRow}><span>Subtotal:</span> <span>${factura.subtotal}</span></p>
                     <p style={totalRow}><span>IVA (15%):</span> <span>${factura.iva}</span></p>
                     <hr />
-                    <h3 style={{ textAlign: 'right' }}>TOTAL: ${factura.total}</h3>
+                    <h3 style={{ textAlign: ('right' as React.CSSProperties['textAlign']) }}>TOTAL: ${factura.total}</h3>
                 </div>
             </div>
 
@@ -120,18 +121,18 @@ const VerFactura: React.FC = () => {
     );
 };
 
-const th = {
+const th: React.CSSProperties = {
     padding: '10px',
     borderBottom: '1px solid #ccc',
     textAlign: 'left'
 };
 
-const td = {
+const td: React.CSSProperties = {
     padding: '10px',
     borderBottom: '1px solid #eee'
 };
 
-const totalRow = {
+const totalRow: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
     margin: '5px 0'

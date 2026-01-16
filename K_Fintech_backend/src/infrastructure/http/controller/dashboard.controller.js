@@ -25,7 +25,7 @@ const getEstadisticasCliente = async (req, res) => {
       },
       raw: true,
     });
-    
+
     const totalFacturado = facturasConTotal.reduce((sum, factura) => {
       return sum + parseFloat(factura['detalle_total.valor_total'] || 0);
     }, 0);
@@ -57,24 +57,19 @@ const getEstadisticasCliente = async (req, res) => {
       limit: 5,
     });
 
-    // Métodos de pago más usados
-    const metodosPagoMasUsados = await FormaPago.findAll({
-      attributes: ['nombre', 'id_forma_pago'],
-      include: [{
-        model: Factura,
-        attributes: [[Factura.sequelize.fn('COUNT', Factura.sequelize.col('id_forma_pago')), 'uso']],
-        group: ['Factura.id_forma_pago'],
-        required: false,
-      }],
-      order: [[Factura, 'uso', 'DESC']],
-      limit: 5,
+    // Contadores solicitados
+    const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+    const totalFacturas = await Factura.count({
+      where: { createdAt: { [Op.gte]: startOfYear } }
     });
+
+    const formasPagoCount = await FormaPago.count();
 
     res.json({
       totalFacturado: parseFloat(totalFacturado) || 0,
+      totalFacturas,
+      formasPagoCount,
       facturasPorEstado: facturasPorEstado,
-      topClientes: topClientes,
-      metodosPagoMasUsados: metodosPagoMasUsados,
     });
   } catch (error) {
     console.error('Error obteniendo estadísticas:', error);
