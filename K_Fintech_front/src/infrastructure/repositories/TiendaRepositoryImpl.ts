@@ -1,130 +1,79 @@
 import type { TiendaRepository } from '../../domain/repositories/TiendaRepository';
-import { TiendaEntity } from '../../domain/entities/Tienda';
+import type { Tienda, TiendaCreate, TiendaUpdate } from '../../domain/entities/Tienda';
 
 const API_BASE_URL = 'http://localhost:4200';
 
-interface TiendaAPI {
-  id: number;
-  nombre: string;
-  puntoEmision: string;
-  direccion: string;
-  contacto: string;
-  telefono: string;
-  correo: string;
-  ruc: string;
-}
+// Lo que devuelve backend al cliente
+type TiendaAPI = Tienda;
 
 export class TiendaRepositoryImpl implements TiendaRepository {
-  async getAll(): Promise<TiendaEntity[]> {
-    // En una implementación real, esto se conectaría con la API
-    const response = await fetch(`${API_BASE_URL}/api/tiendas`);
-    const data: TiendaAPI[] = await response.json();
-    
-    return data.map((item: TiendaAPI) => 
-      new TiendaEntity(
-        item.id,
-        item.nombre,
-        item.puntoEmision,
-        item.direccion,
-        item.contacto,
-        item.telefono,
-        item.correo,
-        item.ruc
-      )
-    );
+
+  private mapToDomain(data: TiendaAPI): Tienda {
+    return {
+      idTienda: data.idTienda,
+      fotoTienda: data.fotoTienda,
+      nombreTienda: data.nombreTienda,
+      dueñoTienda: data.dueñoTienda,
+      RUCTienda: data.RUCTienda,
+      dirección_matriz_tienda: data.dirección_matriz_tienda,
+      direccion_sucursal_tienda: data.direccion_sucursal_tienda,
+      correo_electronico_tienda: data.correo_electronico_tienda,
+      telefono: data.telefono,
+      estado: data.estado,
+      codigoPuntoEmision: data.codigoPuntoEmision,
+      ciudad: data.ciudad,
+      configuracionFacturacion: data.configuracionFacturacion
+    };
   }
 
-  async getById(id: number): Promise<TiendaEntity | null> {
-    // En una implementación real, esto se conectaría con la API
-    const response = await fetch(`${API_BASE_URL}/api/tiendas/${id}`);
-    if (!response.ok) return null;
-    
-    const data: TiendaAPI = await response.json();
-    return new TiendaEntity(
-      data.id,
-      data.nombre,
-      data.puntoEmision,
-      data.direccion,
-      data.contacto,
-      data.telefono,
-      data.correo,
-      data.ruc
-    );
+  async getAll(): Promise<Tienda[]> {
+    const res = await fetch(`${API_BASE_URL}/api/tiendas`);
+    const data: TiendaAPI[] = await res.json();
+    return data.map(d => this.mapToDomain(d));
   }
 
-  async create(tienda: TiendaEntity): Promise<TiendaEntity> {
-    // En una implementación real, esto se conectaría con la API
-    const response = await fetch(`${API_BASE_URL}/api/tiendas`, {
+  async getById(id: number): Promise<Tienda | null> {
+    const res = await fetch(`${API_BASE_URL}/api/tiendas/${id}`);
+    if (!res.ok) return null;
+    return this.mapToDomain(await res.json());
+  }
+
+  async create(tienda: TiendaCreate): Promise<Tienda> {
+    const res = await fetch(`${API_BASE_URL}/api/tiendas`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(tienda),
     });
-    
-    const data: TiendaAPI = await response.json();
-    return new TiendaEntity(
-      data.id,
-      data.nombre,
-      data.puntoEmision,
-      data.direccion,
-      data.contacto,
-      data.telefono,
-      data.correo,
-      data.ruc
-    );
+    return this.mapToDomain(await res.json());
   }
 
-  async update(id: number, tienda: Partial<TiendaEntity>): Promise<TiendaEntity | null> {
-    // En una implementación real, esto se conectaría con la API
-    const response = await fetch(`${API_BASE_URL}/api/tiendas/${id}`, {
+  async update(id: number, tienda: TiendaUpdate): Promise<Tienda | null> {
+    const res = await fetch(`${API_BASE_URL}/api/tiendas/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(tienda),
     });
-    
-    if (!response.ok) return null;
-    
-    const data: TiendaAPI = await response.json();
-    return new TiendaEntity(
-      data.id,
-      data.nombre,
-      data.puntoEmision,
-      data.direccion,
-      data.contacto,
-      data.telefono,
-      data.correo,
-      data.ruc
-    );
+    if (!res.ok) return null;
+    return this.mapToDomain(await res.json());
   }
 
   async delete(id: number): Promise<boolean> {
-    // En una implementación real, esto se conectaría con la API
-    const response = await fetch(`${API_BASE_URL}/api/tiendas/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/tiendas/${id}`, {
       method: 'DELETE',
     });
-    
-    return response.ok;
+    return res.ok;
   }
 
-  async getByUserId(userId: number): Promise<TiendaEntity[]> {
-    // En una implementación real, esto se conectaría con la API
-    const response = await fetch(`${API_BASE_URL}/api/tiendas/user/${userId}`);
-    const data: TiendaAPI[] = await response.json();
-    
-    return data.map((item: TiendaAPI) => 
-      new TiendaEntity(
-        item.id,
-        item.nombre,
-        item.puntoEmision,
-        item.direccion,
-        item.contacto,
-        item.telefono,
-        item.correo,
-        item.ruc
-      )
-    );
+  async getByUserId(userId: number): Promise<Tienda[]> {
+    const res = await fetch(`${API_BASE_URL}/api/tiendas/user/${userId}`);
+    const data: TiendaAPI[] = await res.json();
+    return data.map(d => this.mapToDomain(d));
+  }
+
+  async getMiTienda(idDueño: number): Promise<Tienda | null> {
+    const res = await fetch(`${API_BASE_URL}/api/tiendas/mi/${idDueño}`);
+    if (!res.ok) return null;
+    const data: TiendaAPI = await res.json();
+    return this.mapToDomain(data);
   }
 }

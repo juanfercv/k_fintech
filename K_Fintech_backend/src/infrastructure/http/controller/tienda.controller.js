@@ -16,18 +16,21 @@ tiendaCTl.listarTiendas = async (req, res) => {
 };
 
 tiendaCTl.obtenerTienda = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const tienda = await orm.tienda.findByPk(id);
-        if (tienda) {
-            res.json(tienda);
-        } else {
-            res.status(404).json({ message: 'Tienda no encontrada' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+  try {
+    const id = req.params.id;
+
+    const tienda = await orm.tienda.findByPk(id);
+
+    if (!tienda) {
+      return res.status(404).json({ message: 'Tienda no encontrada' });
     }
+
+    res.json(tienda);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
+
 
 tiendaCTl.crearTienda = async (req, res) => {
     try {

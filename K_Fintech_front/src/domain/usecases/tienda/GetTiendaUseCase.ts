@@ -1,14 +1,15 @@
+// domain/usecases/tienda/GetTiendasUseCase.ts
 import type { TiendaRepository } from '../../repositories/TiendaRepository';
-import { TiendaEntity } from '../../entities/Tienda';
+import type { Tienda } from '../../entities/Tienda';
 
-export class GetTiendaUseCase {
-  private tiendaRepository: TiendaRepository;
+export class GetTiendasUseCase {
+  private repo: TiendaRepository;
 
-  constructor(tiendaRepository: TiendaRepository) {
-    this.tiendaRepository = tiendaRepository;
+  constructor(repo: TiendaRepository) {
+    this.repo = repo;
   }
 
-  async execute(userId: number): Promise<TiendaEntity[]> {
-    return await this.tiendaRepository.getByUserId(userId);
+  async execute(): Promise<Tienda[]> {
+    return this.repo.getAll();
   }
 }

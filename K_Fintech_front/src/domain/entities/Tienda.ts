@@ -1,41 +1,73 @@
-export interface TiendaDomain {
-  id: number;
-  nombre: string;
-  puntoEmision: string;
-  direccion: string;
-  contacto: string;
+// 📌 ENTIDAD PRINCIPAL (lo que el backend devuelve)
+export interface Tienda {
+  idTienda: number;
+  fotoTienda?: string;
+  nombreTienda: string;
+  dueñoTienda: string;
+  RUCTienda: string;
+  dirección_matriz_tienda: string;
+  direccion_sucursal_tienda?: string;
+  correo_electronico_tienda: string;
   telefono: string;
-  correo: string;
-  ruc: string;
+  estado: 'activa' | 'inactiva';
+  crearTienda?: string;
+  actualizarTienda?: string;
+
+  // Puntos de emisión
+  codigoPuntoEmision?: string;
+  ciudad?: string;
+
+  // Configuración de facturación
+  configuracionFacturacion?: {
+    ambiente: 'produccion' | 'pruebas';
+    tipoEmision: 'normal' | 'contingencia';
+    secuencialInicio?: number;
+  };
 }
 
-export class TiendaEntity {
-  readonly id: number;
-  nombre: string;
-  puntoEmision: string;
-  direccion: string;
-  contacto: string;
+// 📌 PARA CREAR TIENDA
+export interface TiendaCreate {
+  fotoTienda?: string;
+  nombreTienda: string;
+  dueñoTienda: string;
+  RUCTienda: string;
+  dirección_matriz_tienda: string;
+  direccion_sucursal_tienda?: string;
+  correo_electronico_tienda: string;
   telefono: string;
-  correo: string;
-  ruc: string;
+  estado: 'activa' | 'inactiva';
+  codigoPuntoEmision?: string;
+  ciudad?: string;
+  configuracionFacturacion?: {
+    ambiente: 'produccion' | 'pruebas';
+    tipoEmision: 'normal' | 'contingencia';
+    secuencialInicio?: number;
+  };
+}
 
-  constructor(
-    id: number,
-    nombre: string,
-    puntoEmision: string,
-    direccion: string,
-    contacto: string,
-    telefono: string,
-    correo: string,
-    ruc: string
-  ) {
-    this.id = id;
-    this.nombre = nombre;
-    this.puntoEmision = puntoEmision;
-    this.direccion = direccion;
-    this.contacto = contacto;
-    this.telefono = telefono;
-    this.correo = correo;
-    this.ruc = ruc;
-  }
+// 📌 PARA ACTUALIZACIONES
+export interface TiendaUpdate {
+  fotoTienda?: string;
+  nombreTienda?: string;
+  dueñoTienda?: string;
+  RUCTienda?: string;
+  dirección_matriz_tienda?: string;
+  direccion_sucursal_tienda?: string;
+  correo_electronico_tienda?: string;
+  telefono?: string;
+  estado?: 'activa' | 'inactiva';
+  codigoPuntoEmision?: string;
+  ciudad?: string;
+  configuracionFacturacion?: {
+    ambiente?: 'produccion' | 'pruebas';
+    tipoEmision?: 'normal' | 'contingencia';
+    secuencialInicio?: number;
+  };
+}
+
+// 📌 Para buscar por filtros
+export interface TiendaFiltros {
+  estado?: 'activa' | 'inactiva';
+  ciudad?: string;
+  nombre?: string;
 }
