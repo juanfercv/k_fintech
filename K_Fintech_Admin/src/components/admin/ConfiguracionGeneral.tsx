@@ -204,6 +204,8 @@ const ConfiguracionGeneral: React.FC = () => {
   const [editandoUsuario, setEditandoUsuario] = useState<any>(null);
   const [editandoRol, setEditandoRol] = useState<any>(null);
   const [editandoIntegracion, setEditandoIntegracion] = useState<any>(null);
+
+  const [parametros, setParametros] = useState({
     moneda: { codigo: 'USD', simbolo: '$', nombre: 'Dólar Estadounidense', decimales: 2 },
     pais: { codigo: 'EC', nombre: 'Ecuador', codigoTelefono: '+593' },
     impuestos: { 
