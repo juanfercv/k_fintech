@@ -1,4 +1,6 @@
-/* Reset y configuración general */
+/* =========================================
+   1. RESET Y VARIABLES GLOBALES
+   ========================================= */
 * {
   box-sizing: border-box;
 }
@@ -13,7 +15,8 @@
   --text-color: #333;
   --primary-start: #667eea;
   --primary-end: #764ba2;
-  --navbar-height: 72px;
+  --sidebar-width: 250px; /* Variable para controlar el ancho del menú */
+  --header-height: 60px;
 }
 
 html, body {
@@ -24,7 +27,6 @@ html, body {
 }
 
 body {
-  margin: 0;
   min-width: 320px;
   min-height: 100vh;
   background: var(--bg-color);
@@ -32,6 +34,9 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* =========================================
+   2. LAYOUT PRINCIPAL (CONTENEDOR)
+   ========================================= */
 .app {
   width: 100%;
   min-height: 100vh;
@@ -41,158 +46,139 @@ body {
   color: var(--text-color);
 }
 
-.app-header {
-  background: #667eea;
-  color: white;
-  padding: 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.app-header h1 {
-  margin: 0;
-  text-align: center;
-  font-size: 1.5rem;
-  color: white;
-  font-weight: 600;
-}
-
-#root {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
+/* IMPORTANTE: Margen para empujar el contenido a la derecha en escritorio */
+.view-container, 
+.main-content,
 .container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  margin-left: var(--sidebar-width); /* Deja espacio para el sidebar fijo */
+  width: calc(100% - var(--sidebar-width));
+  padding: 2rem;
+  transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-/* Estilos generales para la navegación */
-.navbar {
-  background: var(--primary-start);
-  padding: 1rem 2rem;
-  position: sticky;
+/* =========================================
+   3. SIDEBAR (ESTILOS ESCRITORIO)
+   ========================================= */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
   top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border-bottom: 1px solid #e0e0e0;
-  height: var(--navbar-height);
+  left: 0;
+  background-color: #1a1f2c; /* Color oscuro Fintech */
+  color: #ffffff;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
 }
 
-.navbar-content {
+/* Header del Sidebar */
+.sidebar-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  position: relative; /* Para posicionar la X absoluta si es necesario */
 }
 
-.navbar-title {
-  color: white;
+.sidebar-title {
   font-size: 1.5rem;
   font-weight: bold;
+  color: #3b82f6;
   margin: 0;
 }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
+/* Lista de enlaces */
+.sidebar-links {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto; /* Scroll interno si hay muchos items */
 }
 
-.nav-link {
-  color: white;
+.sidebar-links li {
+  margin-bottom: 0.5rem;
+}
+
+/* Enlaces individuales */
+.sidebar-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #94a3b8;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: all 0.3s;
-  font-weight: 500;
-  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-.nav-link:hover {
-  background-color: rgba(255,255,255,0.2);
-  transform: translateY(-2px);
+.sidebar-link:hover {
+  background-color: rgba(255,255,255,0.05);
+  color: #fff;
+  transform: translateX(5px);
 }
 
-.nav-link.active {
-  background-color: rgba(255,255,255,0.3);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.user-info {
+.sidebar-link.active {
+  background-color: #3b82f6;
   color: white;
   font-weight: 500;
+}
+
+/* Info Usuario (Abajo) */
+.user-info {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.user-avatar {
+  width: 35px;
+  height: 35px;
+  background-color: #475569;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
-/* Estilos para los contenedores de vistas */
-.view-container.full-width {
-  max-width: none;
-  width: 100%;
-  padding: 2rem;
+.user-role {
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
-
-.view-container:hover {
-  box-shadow: none;
+/* Elementos ocultos en escritorio */
+.mobile-toggle, 
+.close-btn,
+.sidebar-overlay {
+  display: none;
 }
 
-.view-container h2 {
-  color: #333;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #667eea;
-  font-size: 1.8rem;
-  text-align: center;
-}
+/* =========================================
+   4. ESTILOS GENERALES DE LA APP
+   ========================================= */
 
-/* Estilos para el dashboard */
+/* Dashboard Grid */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -240,36 +226,28 @@ body {
   margin: 0;
   font-size: 2.2rem;
   font-weight: bold;
-  color: #333;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Estilos para métodos de pago */
+/* View Containers */
+.view-container h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+  font-size: 1.8rem;
+  text-align: center; /* O left, según prefieras */
+}
+
+/* Métodos de Pago */
 .metodos-pago-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
-  flex: 1;
-  min-height: 0;
-}
-
-/* Sobrescribir estilos en línea problemáticos */
-.metodos-pago-list,
-.seleccion-metodos,
-.preferencias-metodos,
-.estadisticas-metodos {
-  display: block !important;
-  overflow: visible !important;
-  min-height: auto !important;
-}
-  
-.metodos-pago-container {
-  display: block !important;
-  overflow: visible !important;
+  display: block !important; /* Fix anterior */
 }
 
 .metodo-item {
@@ -287,12 +265,9 @@ body {
   background: #f8f9ff;
 }
 
-.metodo-checkbox {
-  margin-right: 1rem;
-}
-
 .metodo-info {
   flex: 1;
+  padding-left: 1rem;
 }
 
 .metodo-name {
@@ -300,19 +275,7 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.metodo-description {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-/* Estilos para tienda */
-.tienda-container {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
+/* Tienda */
 .tienda-info {
   background: white;
   padding: 2rem;
@@ -320,11 +283,6 @@ body {
   border: 1px solid #e0e0e0;
   max-width: 800px;
   margin: 0 auto;
-}
-
-.tienda-field {
-  margin-bottom: 1rem;
-  text-align: left;
 }
 
 .tienda-label {
@@ -341,7 +299,7 @@ body {
   border-radius: 4px;
 }
 
-/* Botones generales */
+/* Botones */
 .btn {
   padding: 0.75rem 1.5rem;
   border: none;
@@ -363,87 +321,13 @@ body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.btn-secondary {
-  background: #6c757d;
-  color: white;
-}
-
-.btn-secondary:hover {
-  background: #5a6268;
-}
-
-/* Formularios */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #333;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
-}
-
-/* Overlay de formulario */
-.form-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.form-modal {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-.form-modal h2 {
-  margin-top: 0;
-  color: #333;
-}
-
-.close-btn {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-.close-btn:hover {
-  background: #c82333;
-}
-
 /* Tablas */
 .table-container {
   overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .data-table {
@@ -465,13 +349,12 @@ body {
   color: #333;
 }
 
-.data-table tr:hover {
-  background: #f8f9fa;
-}
-
-/* Autenticación */
+/* Formularios y Auth */
 .auth-container {
-  min-height: calc(100vh - var(--navbar-height, 0px));
+  /* En auth no queremos margen izquierdo porque no hay sidebar usualmente */
+  margin-left: 0 !important; 
+  width: 100% !important;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -488,24 +371,7 @@ body {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-.auth-form h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #333;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #333;
-}
-
-.form-group input {
+.form-input {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -513,87 +379,91 @@ body {
   font-size: 1rem;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
-}
-
-.error-message {
-  background: #f8d7da;
-  color: #721c24;
-  padding: 0.75rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  border: 1px solid #f5c6cb;
-}
-
-.auth-link {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.auth-link a {
-  color: #667eea;
-  text-decoration: none;
-}
-
-.auth-link a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .navbar-content {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .nav-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-  }
-  
-  .view-container {
-    padding: 1rem;
-  }
-  
-  .dashboard-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-  }
-  
-  .auth-form {
-    margin: 1rem;
-    padding: 1.5rem;
-  }
-}
-
+/* =========================================
+   5. RESPONSIVE / MÓVIL (HAMBURGUESA)
+   ========================================= */
 @media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    align-items: center;
+  
+  /* 1. Botón Hamburguesa */
+  .mobile-toggle {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1100;
+    background-color: #1a1f2c;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  /* 2. Sidebar Escondido */
+  .sidebar {
+    transform: translateX(-100%); /* Fuera de pantalla */
+    width: 280px; /* Un poco más ancho para móviles */
+  }
+
+  /* 3. Sidebar Abierto */
+  .sidebar.open {
+    transform: translateX(0); /* Entra a pantalla */
+  }
+
+  /* 4. Botón Cerrar (X) */
+  .close-btn {
+    display: block;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 2rem;
+    position: absolute;
+    right: 15px; /* Separado del borde derecho */
+    top: 15px;   /* Separado del borde superior */
+    padding: 0;
+    cursor: pointer;
+    z-index: 1001;
   }
   
+  .close-btn:hover {
+    color: white;
+  }
+
+  /* 5. Overlay Oscuro */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 900;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.3s;
+  }
+
+  /* 6. Ajuste de Contenido Principal */
+  /* Quitamos el margen izquierdo para usar todo el ancho */
+  .view-container, 
+  .main-content,
+  .container {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    padding-top: 70px; /* Espacio superior para no chocar con el botón hamburguesa */
+  }
+  
+  /* Ajustes extras para grids en móvil */
   .dashboard-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
-  .view-container h2 {
-    font-size: 1.5rem;
-  }
-  
-  .stat-card h3 {
-    font-size: 0.9rem;
-  }
-  
-  .stat-card p {
-    font-size: 1.8rem;
-  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
