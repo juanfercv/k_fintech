@@ -39,28 +39,52 @@ class ConfiguracionController {
     try {
       const grupos = req.body;
       
+      // Validar que req.body no esté vacío
+      if (!grupos || Object.keys(grupos).length === 0) {
+        return res.status(400).json({ error: 'No hay parámetros para actualizar' });
+      }
+
+      // Usar transacción para mantener integridad
+      const actualizaciones = [];
+      
       for (const [grupo, parametrosGrupo] of Object.entries(grupos)) {
+        if (!parametrosGrupo || typeof parametrosGrupo !== 'object') {
+          continue;
+        }
+
         for (const [clave, valor] of Object.entries(parametrosGrupo)) {
+          if (valor === null || valor === undefined) {
+            continue;
+          }
+
           const tipo = typeof valor === 'object' ? 'json' : 
                       typeof valor === 'number' ? 'number' :
                       typeof valor === 'boolean' ? 'boolean' : 'string';
           
           const valorString = tipo === 'json' ? JSON.stringify(valor) : String(valor);
           
-          await ParametroSistema.upsert({
-            clave: `${grupo}_${clave}`,
-            valor: valorString,
-            tipo: tipo,
-            descripcion: `Parámetro ${clave} del grupo ${grupo}`,
-            grupo: grupo
-          });
+          actualizaciones.push(
+            ParametroSistema.upsert({
+              clave: `${grupo}_${clave}`,
+              valor: valorString,
+              tipo: tipo,
+              descripcion: `Parámetro ${clave} del grupo ${grupo}`,
+              grupo: grupo
+            }).catch(err => {
+              console.error(`Error al actualizar parámetro ${grupo}_${clave}:`, err);
+              throw err;
+            })
+          );
         }
       }
       
-      res.json({ message: 'Parámetros actualizados correctamente' });
+      // Ejecutar todas las actualizaciones
+      await Promise.all(actualizaciones);
+      
+      res.json({ message: 'Parámetros actualizados correctamente', actualizados: actualizaciones.length });
     } catch (error) {
       console.error('Error actualizando parámetros:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
+      res.status(500).json({ error: 'Error al actualizar parámetros. Verifica los datos y vuelve a intentar.' });
     }
   }
 

@@ -59,17 +59,65 @@ facturaCtl.obtenerFactura = async (req, res) => {
 // CREAR FACTURA
 facturaCtl.crearFactura = async (req, res) => {
     try {
-        const { idTienda, idCliente, idFormaPago, fecha_emision, estado_factura } = req.body;
+        const { idTienda, idCliente, idFormaPago, fecha_emision, estado_factura, total, detalle } = req.body;
 
         const factura = await orm.factura.create({
             idTienda,
             idCliente,
             idFormaPago,
             fecha_emision,
-            estado_factura
+            estado_factura: estado_factura || 'Pendiente',
+            total: total || 0,
+            detalle: detalle || ''
         });
 
         res.status(201).json(factura);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// ACTUALIZAR FACTURA
+facturaCtl.actualizarFactura = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { idTienda, idCliente, idFormaPago, fecha_emision, estado_factura, total, detalle } = req.body;
+
+        const factura = await orm.factura.findOne({ where: { idFactura: id } });
+
+        if (!factura) {
+            return res.status(404).json({ message: 'Factura no encontrada' });
+        }
+
+        await factura.update({
+            idTienda,
+            idCliente,
+            idFormaPago,
+            fecha_emision,
+            estado_factura: estado_factura || factura.estado_factura,
+            total: total !== undefined ? total : factura.total,
+            detalle: detalle !== undefined ? detalle : factura.detalle
+        });
+
+        res.json(factura);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// ELIMINAR FACTURA
+facturaCtl.eliminarFactura = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const factura = await orm.factura.findOne({ where: { idFactura: id } });
+
+        if (!factura) {
+            return res.status(404).json({ message: 'Factura no encontrada' });
+        }
+
+        await factura.destroy();
+        res.json({ message: 'Factura eliminada exitosamente' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

@@ -34,7 +34,7 @@ tiendaCTl.obtenerTienda = async (req, res) => {
 
 tiendaCTl.crearTienda = async (req, res) => {
     try {
-        const { fotoTienda, nombreTienda, dueñoTienda, RUCTienda, dirección_matriz_tienda, direccion_sucursal_tienda, correo_electronico_tienda, telefono } = req.body;
+        const { fotoTienda, nombreTienda, dueñoTienda, RUCTienda, dirección_matriz_tienda, direccion_sucursal_tienda, correo_electronico_tienda, telefono, ciudad, codigoPuntoEmision, estado, configuracionFacturacion } = req.body;
         const nuevaTienda = {
             fotoTienda,
             nombreTienda,
@@ -43,7 +43,11 @@ tiendaCTl.crearTienda = async (req, res) => {
             dirección_matriz_tienda,
             direccion_sucursal_tienda,
             correo_electronico_tienda,
-            telefono
+            telefono,
+            ciudad,
+            codigoPuntoEmision,
+            estado: estado || 'activa',
+            configuracionFacturacion: configuracionFacturacion ? JSON.stringify(configuracionFacturacion) : null
         };
         const resultado = await orm.tienda.create(nuevaTienda);
         res.status(201).json(resultado);
@@ -55,7 +59,7 @@ tiendaCTl.crearTienda = async (req, res) => {
 tiendaCTl.actualizarTienda = async (req, res) => {
     try {
         const id = req.params.id;
-        const { fotoTienda, nombreTienda, dueñoTienda, RUCTienda, dirección_matriz_tienda, direccion_sucursal_tienda, correo_electronico_tienda, telefono } = req.body;
+        const { fotoTienda, nombreTienda, dueñoTienda, RUCTienda, dirección_matriz_tienda, direccion_sucursal_tienda, correo_electronico_tienda, telefono, ciudad, codigoPuntoEmision, estado, configuracionFacturacion } = req.body;
         const tiendaActualizada = {
             fotoTienda,
             nombreTienda,
@@ -64,7 +68,11 @@ tiendaCTl.actualizarTienda = async (req, res) => {
             dirección_matriz_tienda,
             direccion_sucursal_tienda,
             correo_electronico_tienda,
-            telefono
+            telefono,
+            ciudad,
+            codigoPuntoEmision,
+            estado: estado || 'activa',
+            configuracionFacturacion: configuracionFacturacion ? JSON.stringify(configuracionFacturacion) : null
         };
         const tienda = await orm.tienda.findOne({ where: { idTienda: id } });
         if (tienda) {

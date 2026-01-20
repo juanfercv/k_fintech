@@ -13,6 +13,18 @@ const tienda=(sequelize,type)=>{
         direccion_sucursal_tienda: type.STRING,
         correo_electronico_tienda: type.STRING,
         telefono: type.STRING,
+        ciudad: type.STRING,
+        codigoPuntoEmision: type.STRING,
+        estado: {
+            type: type.ENUM('activa', 'inactiva'),
+            defaultValue: 'activa',
+            allowNull: false
+        },
+        configuracionFacturacion: {
+            type: type.TEXT,
+            allowNull: true,
+            defaultValue: null
+        },
 
         crearTienda:{
             type:'TIMESTAMP',

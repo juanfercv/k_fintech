@@ -548,35 +548,42 @@ const FacturasAdmin: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {facturas.map((factura) => (
-                <tr key={factura.idFactura}>
-                  <td style={styles.tableCell}>{factura.idFactura}</td>
-                  <td style={styles.tableCell}>{factura.fecha_emision}</td>
-                  <td style={styles.tableCell}>{factura.idTienda}</td>
-                  <td style={styles.tableCell}>{factura.idCliente}</td>
-                  <td style={styles.tableCell}>{factura.idFormaPago}</td>
-                  <td style={styles.tableCell}>{factura.estado_factura}</td>
-                  <td style={styles.tableCell}>${parseFloat(factura.total || 0).toFixed(2)}</td>
-                  <td style={styles.tableCell}>
-                    <button 
-                      style={{...styles.actionButton, ...styles.editButton}}
-                      onClick={() => handleEditar(factura)}
-                      onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
-                      onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-                    >
-                      Editar
-                    </button>
-                    <button 
-                      style={{...styles.actionButton, ...styles.deleteButton}}
-                      onClick={() => handleEliminar(factura)}
-                      onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
-                      onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {facturas.map((factura) => {
+                // Buscar nombres de entidades relacionadas
+                const tienda = tiendas.find(t => (t.idTienda || t.id) === factura.idTienda);
+                const cliente = clientesList.find(c => (c.id_cliente || c.id) === factura.idCliente);
+                const formaPago = formasPago.find(f => (f.id_forma_pago || f.id) === factura.idFormaPago);
+                
+                return (
+                  <tr key={factura.idFactura}>
+                    <td style={styles.tableCell}>{factura.idFactura}</td>
+                    <td style={styles.tableCell}>{factura.fecha_emision}</td>
+                    <td style={styles.tableCell}>{tienda?.nombreTienda || tienda?.nombre || `Tienda ${factura.idTienda}`}</td>
+                    <td style={styles.tableCell}>{cliente?.nombre_cliente || cliente?.nombre || `Cliente ${factura.idCliente}`}</td>
+                    <td style={styles.tableCell}>{formaPago?.nombre || formaPago?.nombre_forma_pago || `Forma ${factura.idFormaPago}`}</td>
+                    <td style={styles.tableCell}>{factura.estado_factura}</td>
+                    <td style={styles.tableCell}>${parseFloat(factura.total || 0).toFixed(2)}</td>
+                    <td style={styles.tableCell}>
+                      <button 
+                        style={{...styles.actionButton, ...styles.editButton}}
+                        onClick={() => handleEditar(factura)}
+                        onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
+                        onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                      >
+                        Editar
+                      </button>
+                      <button 
+                        style={{...styles.actionButton, ...styles.deleteButton}}
+                        onClick={() => handleEliminar(factura)}
+                        onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
+                        onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

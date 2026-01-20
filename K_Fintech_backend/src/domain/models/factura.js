@@ -5,7 +5,10 @@ const factura = (sequelize, type) => {
             primaryKey: true,
             autoIncrement: true
         },
-        fecha_emision: type.STRING,
+        fecha_emision: {
+            type: type.STRING,
+            allowNull: false
+        },
         idTienda: {
             type: type.INTEGER,
             allowNull: true
@@ -18,8 +21,21 @@ const factura = (sequelize, type) => {
             type: type.INTEGER,
             allowNull: true
         },
-        estado_factura: type.STRING,
-        total: type.DECIMAL(10, 2),
+        estado_factura: {
+            type: type.STRING,
+            defaultValue: 'Pendiente',
+            allowNull: false
+        },
+        detalle: {
+            type: type.TEXT,
+            allowNull: true,
+            defaultValue: ''
+        },
+        total: {
+            type: type.DECIMAL(10, 2),
+            defaultValue: 0,
+            allowNull: false
+        },
 
         crearFactura: {
             type: 'TIMESTAMP',
