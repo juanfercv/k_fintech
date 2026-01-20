@@ -1,4 +1,5 @@
 export interface DetalleFactura {
+    id_detalle_factura?: number;
     descripcion: string;
     cantidad: number;
     precio_unitario: number;
